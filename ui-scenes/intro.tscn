@@ -1,0 +1,59 @@
+[gd_scene load_steps=4 format=3 uid="uid://b7m0hb81nfef1"]
+
+[ext_resource type="Script" uid="uid://dfog0v7h5rluw" path="res://ui-scenes/intro.gd" id="1_4tuf5"]
+[ext_resource type="Theme" uid="uid://c6hyu8hna1sh7" path="res://ui-scenes/default.tres" id="1_aelmc"]
+[ext_resource type="FontFile" uid="uid://dmmb45mnthq73" path="res://ui-scenes/Alegreya-VariableFont_wght.ttf" id="2_4tuf5"]
+
+[node name="Intro" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_4tuf5")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.588235, 0.423529, 0.423529, 1)
+
+[node name="Message" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 250.0
+offset_top = 226.0
+offset_right = 290.0
+offset_bottom = 266.0
+
+[node name="Panel" type="Panel" parent="Message"]
+layout_mode = 0
+offset_right = 746.0
+offset_bottom = 177.0
+
+[node name="Label" type="Label" parent="Message"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 15.0
+offset_right = 718.0
+offset_bottom = 118.0
+theme = ExtResource("1_aelmc")
+theme_override_fonts/font = ExtResource("2_4tuf5")
+text = "Hello little one, what’s that?
+You want help finding the Griffin Of The Woods?"
+
+[node name="LetsGoButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 516.0
+offset_top = 453.0
+offset_right = 690.0
+offset_bottom = 505.0
+theme = ExtResource("1_aelmc")
+text = "Let's go!"
+
+[connection signal="pressed" from="LetsGoButton" to="." method="_on_lets_go_button_pressed"]
