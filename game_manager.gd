@@ -9,6 +9,7 @@ var mushroom_names := ["Big Ol' Conecaps","Witches Teats","Stinky Todgers","Drag
 var days_left := 30
 var locations:Array[Location] = []
 var useless_shrooms := []
+var home_locations: Dictionary
 
 func _ready() -> void:
 	initialise_game()
@@ -22,8 +23,11 @@ func initialise_game() -> void:
 	
 	# setup mushrooms in their home locations
 	var slice_pos := 0
+	var temp_i := 0
 	for location in locations:
 		var local_mushrooms = mushroom_names.slice(slice_pos, slice_pos + 3)
+		for mushroom in local_mushrooms:
+			home_locations.set(mushroom, temp_i)
 		var size = local_mushrooms.size()
 		for i in range(size):
 			var secondary = local_mushrooms[(i + 1) % size]
@@ -31,6 +35,7 @@ func initialise_game() -> void:
 			var chances:Array[Array] = [[0.3, local_mushrooms[i]], [ 0.2, secondary ], [ 0.1, tertiary ]]
 			location.add_forest(chances)
 		slice_pos += 3
+		temp_i += 1
 	
 	# distribute around the rest of the locations
 	slice_pos = 0
@@ -93,9 +98,39 @@ func initialise_game() -> void:
 		second_neighbour.maps.append(location.starting_maps.get(forests.pop_back()))
 		location.maps.append(location.starting_maps.get(forests.pop_back()))
 #	setup prices for each location based on distance
+	setup_prices()
+		
 #	add market mods
 #	pick where the griffen is located, replace 0.1 probability
-	
+
+	#print("useless shrooms")
+	#print(useless_shrooms)
+	#print("\n")
+	print_locations()
+	print_prices()
+
+func setup_prices() -> void:
+	for i in range(locations.size()):
+		var location = locations[i]
+		for mushroom in mushroom_names:
+			if useless_shrooms.has(mushroom):
+				location.prices.set(mushroom, 0)
+			else:
+				var distance = distance_between_locations(i, home_locations.get(mushroom))
+				#print(i," ", home_locations.get(mushroom)," ", distance)
+				var gold = get_price(distance)
+				location.prices.set(mushroom, gold)
+
+func get_price(distance:int) -> int:
+		match distance:
+			0:
+				return 3
+			1:
+				return 5
+			2:
+				return 8
+			_:
+				return 666
 
 func create_pick_array(start_index:int = 0) -> Array[int]:
 	var picker:Array[int] = []
@@ -110,38 +145,27 @@ func get_connected_villages(start:int) -> Array:
 	return villages
 	
 func distance_between_locations(start:int, target:int) -> int:
-	#BFS for days travel between locations
+	# this is a very hacky distance calc that only works for this small map
 	if start == target:
 		return 0
-	
-	var queue = []
-	queue.append([start, 0])  #[location_index, distance]
-	var visited = {start: true}
-	var queue_index = 0
-
-	while queue_index < queue.size():
-		var current = queue[queue_index]
-		var node = current[0]
-		var distance = current[1]
-		queue_index += 1
-
-		# Check neighbors
-		for neighbor in locations[node].connections:
-			if neighbor == target:
-				return distance + 1
-			if not visited.has(neighbor):
-				visited[neighbor] = true
-				queue.append([neighbor, distance + 1])
-	return -1
+	for neighbor in locations[start].connections:
+		if neighbor == target:
+			return 1
+	return 2
 	
 func print_locations():
-	print("useless shrooms")
-	print(useless_shrooms)
-	print("\n")
-	
 	for location in locations:
 		print(location.display_name)
 		for forest in location.forests:
 			print("  ", forest.forest_name)
 			for chance in forest.mushrooms:
 				print("    ", chance[0], " - ", chance[1])
+		#for map in location.maps:
+			#print("  ", map)
+		print(location.connections)
+
+func print_prices():	
+	for location in locations:
+		print(location.display_name)
+		for price in location.prices:
+			print(price, " ", location.prices[price])

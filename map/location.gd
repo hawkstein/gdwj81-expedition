@@ -10,7 +10,7 @@ var griffin_clue := true
 var next_forest := 0
 var has_griffen := false
 
-var prices
+var prices:Dictionary
 # mushroom values and type of price
 
 class Forest:
