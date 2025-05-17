@@ -2,9 +2,9 @@ extends Node
 
 var location_names := ["Goblinestone","Grubham", "Stinkton","Shroomburg","Near Lichen","Far Lichen"]
 var edges := [[0,1],[0,2],[1,3],[1,4],[2,3],[2,5],[3,4],[3,5]] # [location_index, location_index]
-var mushroom_names := ["Big Ol' Conecaps","Witches Teats","Stinky Todgers","Dragon Saddles","Ogre's Puffball", \
+var mushroom_names := ["Big Ol' Conecaps","Witches Teats","Stinky Todgers","Dragon Saddles","Giant's Puffball", \
 "Fairy Redcaps","Lil' Gnomecaps","The Unicorn","Funeral Bell","Wizard's Inkcap","Elvish Ear", \
-"King's Cup","Brittlestem","Bolete", "Shank","Polypore", "Gill", "Deathcap"]
+"King's Cup","Bone Brittlestem","Dwarven Bolete", "Thieve's Shank","Cursed Polypore", "Kraken Gill", "Dark Deathcap"]
 
 var days_left := 30
 var locations:Array[Location] = []
@@ -15,13 +15,42 @@ func _ready() -> void:
 	initialise_game()
 	
 func initialise_game() -> void:
-	#print("initialising locations")
+	days_left = 30
 	mushroom_names.shuffle()
+	locations = []
 	for location_name in location_names:
 		var location = Location.new(location_name)
 		locations.append(location)
 	
+	distribute_mushrooms()
+	
+	for location_index in range(locations.size()):
+		locations[location_index].connections = get_connected_villages(location_index)
+	
+	# decide what mushrooms have no value this game
+	useless_shrooms = []
+	while useless_shrooms.size() < 6:
+		var potentially_useless = mushroom_names.slice(3)
+		var pick = potentially_useless.pick_random()
+		if not useless_shrooms.has(pick):
+			useless_shrooms.append(pick)
+	
+	setup_maps()
+	setup_prices()
+		
+#	TODO: add market mods
+
+	pick_griffen_location()
+
+	#print("useless shrooms")
+	#print(useless_shrooms)
+	#print("\n")
+	#print_locations()
+	#print_prices()
+	
+func distribute_mushrooms() -> void:
 	# setup mushrooms in their home locations
+	home_locations = {}
 	var slice_pos := 0
 	var temp_i := 0
 	for location in locations:
@@ -59,19 +88,12 @@ func initialise_game() -> void:
 			var target = picker_array.pop_back()
 			locations[target].add_mushroom_to_next_forest(0.1, shroom)
 		slice_pos += 3
-	
-	for location_index in range(locations.size()):
-		locations[location_index].add_random_chance()
-		locations[location_index].connections = get_connected_villages(location_index)
-	
-	# decide what mushrooms have no value this game
-	while useless_shrooms.size() < 6:
-		var potentially_useless = mushroom_names.slice(3)
-		var pick = potentially_useless.pick_random()
-		if not useless_shrooms.has(pick):
-			useless_shrooms.append(pick)
-	
-#	open up the first two forests at Goblinestone and 1st map
+		
+	for location in locations:
+		location.add_random_chance()
+
+func setup_maps() -> void:
+	# open up the first two forests at Goblinestone and 1st map
 	var goblinestone = locations[0]
 	goblinestone.forests[0].discovered = true
 	var second_forest = randi_range(1, 2)
@@ -79,35 +101,31 @@ func initialise_game() -> void:
 	var missing_forest = 3 - second_forest
 	goblinestone.maps.append_array([[0, missing_forest], [1, 0], [2, 0]])
 	
-#	add maps to locations
+#	add maps to all locations
+	var distribution := [] 
 	for i in range(1, locations.size()):
 		var location = locations[i]
-		location.starting_maps.append_array([[i,0], [i,1], [i,2]])
-	locations[1].starting_maps.remove_at(0)
-	locations[2].starting_maps.remove_at(0)
-	var map_picker = create_pick_array(1)
-	for i in map_picker:
-		var location = locations[i]
-		var neighbours = location.connections.duplicate(true)
-		neighbours.shuffle()
-		var first_neighbour = locations[location.connections.pop_back()]
-		var second_neighbour = locations[location.connections.pop_back()]
 		var forests = [0,1,2]
+		if i == 1 or i == 2:
+			#removing two that were added to Goblinestone
+			forests = [1,2]
 		forests.shuffle()
-		first_neighbour.maps.append(location.starting_maps.get(forests.pop_back()))
-		second_neighbour.maps.append(location.starting_maps.get(forests.pop_back()))
-		location.maps.append(location.starting_maps.get(forests.pop_back()))
-#	setup prices for each location based on distance
-	setup_prices()
-		
-#	add market mods
-#	pick where the griffen is located, replace 0.1 probability
+		location.maps.append([i, forests.pop_back()])
+		location.starting_maps.append([i,forests.pop_back()])
+		if forests.size() > 0:
+			location.starting_maps.append([i,forests.pop_back()])
+		distribution.append_array(location.starting_maps)
+	
+	for i in range(1, locations.size()):
+		for _i in range(2):
+			if distribution.size() > 0:
+				var random_pick = randi_range(0, distribution.size() - 1)
+				var map = distribution.pop_at(random_pick)
+				while map and map.has(i):
+					random_pick = randi_range(0, distribution.size() - 1)
+					map = distribution.pop_at(random_pick)
+				locations[i].maps.append(map)
 
-	#print("useless shrooms")
-	#print(useless_shrooms)
-	#print("\n")
-	print_locations()
-	print_prices()
 
 func setup_prices() -> void:
 	for i in range(locations.size()):
@@ -120,6 +138,18 @@ func setup_prices() -> void:
 				#print(i," ", home_locations.get(mushroom)," ", distance)
 				var gold = get_price(distance)
 				location.prices.set(mushroom, gold)
+
+func pick_griffen_location() -> void:
+	var location_index = randi_range(1, locations.size() - 1)
+	var forest_index = randi_range(0, 2)
+	var forest = locations[location_index].forests[forest_index]
+	forest.has_griffen = true
+	for location in locations:
+		var griffen_map = location.maps.find([location_index, forest_index])
+		if griffen_map >= 0:
+			location.maps.remove_at(griffen_map)
+		print(location.maps)
+	
 
 func get_price(distance:int) -> int:
 		match distance:
@@ -160,9 +190,8 @@ func print_locations():
 			print("  ", forest.forest_name)
 			for chance in forest.mushrooms:
 				print("    ", chance[0], " - ", chance[1])
-		#for map in location.maps:
-			#print("  ", map)
-		print(location.connections)
+		for map in location.maps:
+			print("  ", map)
 
 func print_prices():	
 	for location in locations:
