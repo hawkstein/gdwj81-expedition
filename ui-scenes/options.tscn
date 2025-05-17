@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=3 uid="uid://cu1u27qfk47qy"]
+
+[ext_resource type="Theme" uid="uid://c6hyu8hna1sh7" path="res://ui-scenes/default.tres" id="1_3vtk8"]
+[ext_resource type="Script" uid="uid://cpjs6k2t7og86" path="res://ui-scenes/options.gd" id="1_40ce8"]
+
+[node name="Options" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_40ce8")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.588235, 0.423529, 0.423529, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -290.0
+offset_top = 80.0
+offset_right = 291.0
+offset_bottom = -152.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 0.994924)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_3vtk8")
+theme_override_font_sizes/font_size = 96
+text = "Options"
+horizontal_alignment = 1
+
+[node name="StartButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("1_3vtk8")
+text = "start game"
+
+[connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]

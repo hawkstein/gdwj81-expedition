@@ -60,3 +60,4 @@ theme = ExtResource("1_ok6iv")
 text = "Options"
 
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
