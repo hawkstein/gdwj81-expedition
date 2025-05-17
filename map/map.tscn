@@ -7,20 +7,20 @@
 script = ExtResource("1_a0dt8")
 
 [node name="Background" type="ColorRect" parent="."]
-offset_right = 1153.0
-offset_bottom = 647.0
+offset_right = 1440.0
+offset_bottom = 1024.0
 
 [node name="Panel" type="Panel" parent="."]
 offset_left = 13.0
 offset_top = 13.0
-offset_right = 1138.0
-offset_bottom = 632.0
+offset_right = 1425.0
+offset_bottom = 1010.0
 
 [node name="Temp_RivalButton" type="Button" parent="."]
-offset_left = 488.0
-offset_top = 503.0
-offset_right = 715.0
-offset_bottom = 555.0
+offset_left = 81.0
+offset_top = 511.0
+offset_right = 308.0
+offset_bottom = 563.0
 theme = ExtResource("2_4hjbm")
 text = "next screen"
 
