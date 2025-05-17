@@ -45,7 +45,7 @@ func initialise_game() -> void:
 	#print("useless shrooms")
 	#print(useless_shrooms)
 	#print("\n")
-	#print_locations()
+	print_locations()
 	#print_prices()
 	
 func distribute_mushrooms() -> void:
@@ -144,11 +144,11 @@ func pick_griffen_location() -> void:
 	var forest_index = randi_range(0, 2)
 	var forest = locations[location_index].forests[forest_index]
 	forest.has_griffen = true
+	var replacement = forest.mushrooms.find_custom(func(chance:Array): return is_equal_approx(chance[0], 0.1))
+	forest.mushrooms.remove_at(replacement)
+	forest.mushrooms.append([0.1, "Griffin Of The Woods"])
 	for location in locations:
-		var griffen_map = location.maps.find([location_index, forest_index])
-		if griffen_map >= 0:
-			location.maps.remove_at(griffen_map)
-		print(location.maps)
+		location.maps.erase([location_index, forest_index])
 	
 
 func get_price(distance:int) -> int:
