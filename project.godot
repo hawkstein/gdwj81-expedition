@@ -11,8 +11,18 @@ config_version=5
 [application]
 
 config/name="gdwj81-expedition"
+run/main_scene="uid://d14rf2c8mx7oj"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+SceneManager="*res://addons/scene_manager/scene_manager.tscn"
+Scenes="*res://addons/scene_manager/scenes.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/scene_manager/plugin.cfg")
 
 [rendering]
 

@@ -1,3 +1,13 @@
 [gd_scene format=3 uid="uid://bmforggwv6th2"]
 
 [node name="Map" type="Node2D"]
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 1153.0
+offset_bottom = 647.0
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = 13.0
+offset_top = 13.0
+offset_right = 1138.0
+offset_bottom = 632.0
