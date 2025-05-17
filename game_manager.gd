@@ -1,7 +1,7 @@
 extends Node
 
 var location_names := ["Goblinestone","Grubham", "Stinkton","Shroomburg","Near Lichen","Far Lichen"]
-var edges := [[1,2],[1,3],[2,4],[2,5],[3,4],[3,6],[4,5],[4,6]] # [location_index, location_index]
+var edges := [[0,1],[0,2],[1,3],[1,4],[2,3],[2,5],[3,4],[3,5]] # [location_index, location_index]
 var mushroom_names := ["Big Ol' Conecaps","Witches Teats","Stinky Todgers","Dragon Saddles","Ogre's Puffball", \
 "Fairy Redcaps","Lil' Gnomecaps","The Unicorn","Funeral Bell","Wizard's Inkcap","Elvish Ear", \
 "King's Cup","Brittlestem","Bolete", "Shank","Polypore", "Gill", "Deathcap"]
@@ -73,18 +73,19 @@ func initialise_game() -> void:
 	goblinestone.forests[second_forest].discovered = true
 	var missing_forest = 3 - second_forest
 	goblinestone.maps.append([0, missing_forest]) #[location_index, forest_index]
+	goblinestone.maps.append([1, 0]) #[location_index, forest_index]
 	
 #	add maps to locations
-	for location in locations:
+	for i in range(1, locations.size()):
 		
 #	setup prices for each location based on distance
 #	add market mods
 #	pick where the griffen is located, replace 0.1 probability
 	
 
-func create_pick_array() -> Array[int]:
+func create_pick_array(start_index:int = 0) -> Array[int]:
 	var picker:Array[int] = []
-	for i in range(location_names.size()):
+	for i in range(start_index, location_names.size()):
 		picker.append(i)
 	picker.shuffle()
 	return picker
