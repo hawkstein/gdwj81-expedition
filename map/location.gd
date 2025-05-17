@@ -5,6 +5,7 @@ var display_name := ""
 var forests: Array[Forest] = []
 var connections := []
 var maps := []
+var starting_maps := []
 var griffin_clue := true
 var next_forest := 0
 var has_griffen := false

@@ -7,7 +7,7 @@ var mushroom_names := ["Big Ol' Conecaps","Witches Teats","Stinky Todgers","Drag
 "King's Cup","Brittlestem","Bolete", "Shank","Polypore", "Gill", "Deathcap"]
 
 var days_left := 30
-var locations := []
+var locations:Array[Location] = []
 var useless_shrooms := []
 
 func _ready() -> void:
@@ -72,12 +72,26 @@ func initialise_game() -> void:
 	var second_forest = randi_range(1, 2)
 	goblinestone.forests[second_forest].discovered = true
 	var missing_forest = 3 - second_forest
-	goblinestone.maps.append([0, missing_forest]) #[location_index, forest_index]
-	goblinestone.maps.append([1, 0]) #[location_index, forest_index]
+	goblinestone.maps.append_array([[0, missing_forest], [1, 0], [2, 0]])
 	
 #	add maps to locations
 	for i in range(1, locations.size()):
-		
+		var location = locations[i]
+		location.starting_maps.append_array([[i,0], [i,1], [i,2]])
+	locations[1].starting_maps.remove_at(0)
+	locations[2].starting_maps.remove_at(0)
+	var map_picker = create_pick_array(1)
+	for i in map_picker:
+		var location = locations[i]
+		var neighbours = location.connections.duplicate(true)
+		neighbours.shuffle()
+		var first_neighbour = locations[location.connections.pop_back()]
+		var second_neighbour = locations[location.connections.pop_back()]
+		var forests = [0,1,2]
+		forests.shuffle()
+		first_neighbour.maps.append(location.starting_maps.get(forests.pop_back()))
+		second_neighbour.maps.append(location.starting_maps.get(forests.pop_back()))
+		location.maps.append(location.starting_maps.get(forests.pop_back()))
 #	setup prices for each location based on distance
 #	add market mods
 #	pick where the griffen is located, replace 0.1 probability
