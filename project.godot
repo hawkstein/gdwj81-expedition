@@ -25,6 +25,7 @@ GameManager="*res://game_manager.gd"
 
 window/size/viewport_width=1440
 window/size/viewport_height=1024
+window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
