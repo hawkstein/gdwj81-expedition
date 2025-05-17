@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=3 uid="uid://cb4c4bqjr5wnm"]
+
+[ext_resource type="Theme" uid="uid://c6hyu8hna1sh7" path="res://ui-scenes/default.tres" id="1_arjoy"]
+
+[node name="GameOver" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.588235, 0.423529, 0.423529, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 376.0
+offset_top = 293.0
+offset_right = 1060.0
+offset_bottom = 335.0
+theme = ExtResource("1_arjoy")
+text = "Your rival found the Griffin Of The Woods!"
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 349.0
+offset_top = 464.0
+offset_right = 1123.0
+offset_bottom = 551.0
+theme = ExtResource("1_arjoy")
+text = "They were crowned king and many years of strife were not enjoyed across the land"
+horizontal_alignment = 1
+autowrap_mode = 2

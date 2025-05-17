@@ -25,12 +25,21 @@ color = Color(0.588235, 0.423529, 0.423529, 1)
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 530.0
-offset_top = 115.0
-offset_right = 616.0
-offset_bottom = 157.0
+offset_left = 123.0
+offset_top = 75.0
+offset_right = 1032.0
+offset_bottom = 117.0
 theme = ExtResource("1_y1hnw")
-text = "Rival"
+text = "Your rival goblins haven’t many clues to the Griffin yet"
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 285.0
+offset_top = 168.0
+offset_right = 885.0
+offset_bottom = 210.0
+theme = ExtResource("1_y1hnw")
+text = "You have 12 days left to beat them!"
 
 [node name="WinButton" type="Button" parent="."]
 layout_mode = 0
