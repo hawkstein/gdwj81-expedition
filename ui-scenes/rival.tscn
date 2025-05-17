@@ -1,0 +1,55 @@
+[gd_scene load_steps=3 format=3 uid="uid://cnsb8oypnuq54"]
+
+[ext_resource type="Script" uid="uid://bhd4vu4sc8fpx" path="res://ui-scenes/rival.gd" id="1_lga2c"]
+[ext_resource type="Theme" uid="uid://c6hyu8hna1sh7" path="res://ui-scenes/default.tres" id="1_y1hnw"]
+
+[node name="Rival" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_lga2c")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.588235, 0.423529, 0.423529, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 530.0
+offset_top = 115.0
+offset_right = 616.0
+offset_bottom = 157.0
+theme = ExtResource("1_y1hnw")
+text = "Rival"
+
+[node name="WinButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 425.0
+offset_top = 272.0
+offset_right = 708.0
+offset_bottom = 324.0
+theme = ExtResource("1_y1hnw")
+text = "we find the griffin"
+
+[node name="LoseButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 395.0
+offset_top = 389.0
+offset_right = 796.0
+offset_bottom = 441.0
+theme = ExtResource("1_y1hnw")
+text = "rival finds the griffin
+"
+
+[connection signal="pressed" from="WinButton" to="." method="_on_win_button_pressed"]
+[connection signal="pressed" from="LoseButton" to="." method="_on_lose_button_pressed"]
