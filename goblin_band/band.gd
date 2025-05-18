@@ -3,6 +3,7 @@ extends Control
 @onready var buttons_h_flow_container: HFlowContainer = $ButtonsHFlowContainer
 @onready var band_size_label: Label = $BandSizeLabel
 @onready var validation_label: Label = $ValidationLabel
+@onready var info_label: Label = $InfoLabel
 
 const GOBLIN_BUTTON = preload("res://goblin_band/goblin_button.tscn")
 
@@ -15,6 +16,7 @@ func _ready() -> void:
 		var button = GOBLIN_BUTTON.instantiate()
 		buttons_h_flow_container.add_child(button)
 		button.connect("button_pressed", _on_goblin_button_pressed)
+		button.connect("button_hovered", _on_goblin_button_hovered)
 		button.goblin_uid = goblin.goblin_uid
 		if GameManager.selected_band.has(goblin.goblin_uid):
 			button.select()
@@ -48,6 +50,9 @@ func set_band_size_label() -> void:
 
 func _on_goblin_button_pressed(uid) -> void:
 	GameManager.toggle_goblin_selection(uid)
+
+func _on_goblin_button_hovered(uid) -> void:
+	info_label.text = GameManager.get_goblin_info(uid)
 
 func _on_forage_button_pressed() -> void:
 	SceneManager.change_scene("forage", SceneManager.create_options(), SceneManager.create_options(),SceneManager.create_general_options())

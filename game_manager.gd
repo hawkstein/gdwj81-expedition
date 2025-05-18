@@ -213,6 +213,22 @@ func toggle_goblin_selection(p_uid:int) -> void:
 		selected_band.append(p_uid)
 	band_selection_changed.emit()
 	
+func get_goblin_info(p_uid:int) -> String:
+	var goblin_index = band.find_custom(func(goblin:Goblin): return goblin.goblin_uid == p_uid)
+	var goblin = band.get(goblin_index)
+	var info_text = ""
+	match goblin.type:
+		Goblin.GoblinType.FORAGER:
+			info_text = "Forager Lvl {0}\n".format([goblin.level])
+			info_text += "A Forager finds a mushroom roughly every 2 hours."
+		Goblin.GoblinType.SPECIALIST:
+			info_text = "Specialist Lvl {0}\n".format([goblin.level])
+		Goblin.GoblinType.SCOUT:
+			info_text = "Scout Lvl {0}\n".format([goblin.level])
+		Goblin.GoblinType.GUZZLER:
+			info_text = "Guzzler Lvl {0}\n".format([goblin.level])
+	return info_text
+	
 func print_locations():
 	for location in locations:
 		print(location.display_name)

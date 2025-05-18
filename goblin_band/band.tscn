@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://pg51jsluep64"]
+[gd_scene load_steps=4 format=3 uid="uid://pg51jsluep64"]
 
 [ext_resource type="Script" uid="uid://co2d8aabk74x7" path="res://goblin_band/band.gd" id="1_g05wq"]
 [ext_resource type="Theme" uid="uid://c6hyu8hna1sh7" path="res://ui-scenes/default.tres" id="1_vofrv"]
+[ext_resource type="FontFile" uid="uid://dmmb45mnthq73" path="res://ui-scenes/Alegreya-VariableFont_wght.ttf" id="3_6fs2r"]
 
 [node name="Band" type="Control"]
 layout_mode = 3
@@ -79,6 +80,18 @@ offset_bottom = 982.0
 theme = ExtResource("1_vofrv")
 text = "Please select X goblins before foraging"
 horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="InfoLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 998.0
+offset_top = 261.0
+offset_right = 1391.0
+offset_bottom = 689.0
+theme = ExtResource("1_vofrv")
+theme_override_fonts/font = ExtResource("3_6fs2r")
+theme_override_font_sizes/font_size = 30
+text = "Goblin information goes here"
 autowrap_mode = 2
 
 [connection signal="pressed" from="ForageButton" to="." method="_on_forage_button_pressed"]
