@@ -4,8 +4,8 @@ extends Node2D
 @onready var focus_label: Label = $InfoContainer/FocusLabel
 @onready var location_info: Label = $InfoContainer/LocationInfo
 
-var focused_location:Location = null
-var focused_forest:Location.Forest = null
+var focused_location_index := -1
+var focused_forest_index := -1
 
 func _ready() -> void:
 	info_container.visible = false
@@ -23,7 +23,13 @@ func _ready() -> void:
 func handle_forest_pressed(location_index:int, forest_index:int) -> void:
 	info_container.visible = true
 	var location = GameManager.locations[location_index]
-	focused_location = location
+	focused_location_index = location_index
 	focus_label.text = location.display_name + " Forest "+str(forest_index+1)
-	focused_forest = location.forests[forest_index]
+	var focused_forest = location.forests[forest_index]
+	focused_forest_index = forest_index
 	location_info.text = "Discovered mushrooms: " + str(focused_forest.discovered_mushrooms.size())
+
+
+func _on_action_button_pressed() -> void:
+	GameManager.select_forest(focused_location_index, focused_forest_index)
+	SceneManager.change_scene("band", SceneManager.create_options(), SceneManager.create_options(),SceneManager.create_general_options())

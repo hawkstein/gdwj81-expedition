@@ -1,0 +1,83 @@
+[gd_scene load_steps=3 format=3 uid="uid://pg51jsluep64"]
+
+[ext_resource type="Script" uid="uid://co2d8aabk74x7" path="res://goblin_band/band.gd" id="1_g05wq"]
+[ext_resource type="Theme" uid="uid://c6hyu8hna1sh7" path="res://ui-scenes/default.tres" id="1_vofrv"]
+
+[node name="Band" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g05wq")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.588235, 0.423529, 0.423529, 1)
+
+[node name="HeadingLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -403.0
+offset_top = 48.0
+offset_right = 406.0
+offset_bottom = 122.0
+grow_horizontal = 2
+theme = ExtResource("1_vofrv")
+theme_override_font_sizes/font_size = 64
+text = "Select your band of goblins"
+
+[node name="ForageButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -149.0
+offset_top = 311.0
+offset_right = 156.0
+offset_bottom = 413.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_vofrv")
+theme_override_font_sizes/font_size = 80
+text = "Forage!"
+
+[node name="BandSizeLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 560.5
+offset_top = 151.0
+offset_right = 893.5
+offset_bottom = 193.0
+theme = ExtResource("1_vofrv")
+text = "?/? goblins selected"
+
+[node name="ButtonsHFlowContainer" type="HFlowContainer" parent="."]
+custom_minimum_size = Vector2(1380, 500)
+layout_mode = 0
+offset_left = 47.0
+offset_top = 249.0
+offset_right = 1427.0
+offset_bottom = 811.0
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+
+[node name="ValidationLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 411.0
+offset_top = 951.0
+offset_right = 1062.0
+offset_bottom = 993.0
+theme = ExtResource("1_vofrv")
+text = "Please select X goblins before foraging"
+
+[connection signal="pressed" from="ForageButton" to="." method="_on_forage_button_pressed"]

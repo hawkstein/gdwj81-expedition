@@ -1,0 +1,60 @@
+[gd_scene load_steps=5 format=3 uid="uid://cl3h5dpd3sl6r"]
+
+[ext_resource type="Texture2D" uid="uid://dg5h87tscfiki" path="res://goblin_band/Goblin.png" id="1_an3mb"]
+[ext_resource type="Script" uid="uid://dhjwdwfhokwns" path="res://goblin_band/goblin_button.gd" id="1_d36k5"]
+[ext_resource type="Theme" uid="uid://c6hyu8hna1sh7" path="res://ui-scenes/default.tres" id="2_d36k5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d36k5"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.682353, 0.137255, 0.203922, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="GoblinButton" type="Control"]
+custom_minimum_size = Vector2(441, 110)
+layout_mode = 3
+anchors_preset = 0
+offset_left = 227.0
+offset_top = 319.0
+offset_right = 668.0
+offset_bottom = 429.0
+script = ExtResource("1_d36k5")
+
+[node name="GoblinSprite" type="Sprite2D" parent="."]
+position = Vector2(84, 55)
+texture = ExtResource("1_an3mb")
+
+[node name="InfoLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 173.0
+offset_top = 36.0
+offset_right = 394.0
+offset_bottom = 78.0
+theme = ExtResource("2_d36k5")
+text = "Type Lvl ??"
+
+[node name="SelectionBorder" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_d36k5")
+
+[node name="ClearButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="mouse_entered" from="ClearButton" to="." method="_on_clear_button_mouse_entered"]
+[connection signal="pressed" from="ClearButton" to="." method="_on_clear_button_pressed"]

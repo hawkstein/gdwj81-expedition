@@ -47,6 +47,7 @@ offset_right = 1143.0
 offset_bottom = 911.0
 
 [node name="Village" type="TextureButton" parent="Goblinestone"]
+layout_mode = 0
 offset_left = 87.0
 offset_top = 17.0
 offset_right = 127.0
@@ -97,6 +98,7 @@ offset_right = 686.0
 offset_bottom = 595.0
 
 [node name="Village" type="TextureButton" parent="Grubham"]
+layout_mode = 0
 offset_left = 24.0
 offset_top = 59.0
 offset_right = 64.0
@@ -148,6 +150,7 @@ offset_right = 1219.0
 offset_bottom = 572.0
 
 [node name="Village" type="TextureButton" parent="Stinkton"]
+layout_mode = 0
 offset_left = -1.0
 offset_top = 3.0
 offset_right = 39.0
@@ -199,6 +202,7 @@ offset_right = 981.0
 offset_bottom = 437.0
 
 [node name="Village" type="TextureButton" parent="Shroomburg"]
+layout_mode = 0
 offset_left = -12.0
 offset_top = -46.0
 offset_right = 28.0
@@ -250,6 +254,7 @@ offset_right = 662.0
 offset_bottom = 240.0
 
 [node name="Village" type="TextureButton" parent="Near Lichen"]
+layout_mode = 0
 offset_left = -12.0
 offset_top = -46.0
 offset_right = 28.0
@@ -257,6 +262,7 @@ offset_bottom = -6.0
 texture_normal = ExtResource("3_kffv2")
 
 [node name="Forest 1" type="TextureButton" parent="Near Lichen"]
+layout_mode = 0
 offset_left = -135.0
 offset_top = -4.0
 offset_right = -84.0
@@ -264,6 +270,7 @@ offset_bottom = 50.0
 texture_normal = ExtResource("4_7lyie")
 
 [node name="Forest 2" type="TextureButton" parent="Near Lichen"]
+layout_mode = 0
 offset_left = 78.0
 offset_top = -124.0
 offset_right = 129.0
@@ -271,6 +278,7 @@ offset_bottom = -70.0
 texture_normal = ExtResource("4_7lyie")
 
 [node name="Forest 3" type="TextureButton" parent="Near Lichen"]
+layout_mode = 0
 offset_left = 100.0
 offset_top = -7.0
 offset_right = 151.0
@@ -278,6 +286,7 @@ offset_bottom = 47.0
 texture_normal = ExtResource("4_7lyie")
 
 [node name="Label" type="Label" parent="Near Lichen"]
+layout_mode = 0
 offset_left = -54.0
 offset_top = -1.0
 offset_right = 76.0
@@ -297,6 +306,7 @@ offset_right = 1331.0
 offset_bottom = 192.0
 
 [node name="Village" type="TextureButton" parent="Far Lichen"]
+layout_mode = 0
 offset_left = -1.0
 offset_top = 3.0
 offset_right = 39.0
@@ -304,6 +314,7 @@ offset_bottom = 43.0
 texture_normal = ExtResource("3_kffv2")
 
 [node name="Forest 1" type="TextureButton" parent="Far Lichen"]
+layout_mode = 0
 offset_left = -124.0
 offset_top = 45.0
 offset_right = -73.0
@@ -311,6 +322,7 @@ offset_bottom = 99.0
 texture_normal = ExtResource("4_7lyie")
 
 [node name="Forest 2" type="TextureButton" parent="Far Lichen"]
+layout_mode = 0
 offset_left = -28.0
 offset_top = -98.0
 offset_right = 23.0
@@ -318,6 +330,7 @@ offset_bottom = -44.0
 texture_normal = ExtResource("4_7lyie")
 
 [node name="Forest 3" type="TextureButton" parent="Far Lichen"]
+layout_mode = 0
 offset_left = 43.0
 offset_top = 94.0
 offset_right = 94.0
@@ -325,6 +338,7 @@ offset_bottom = 148.0
 texture_normal = ExtResource("4_7lyie")
 
 [node name="Label" type="Label" parent="Far Lichen"]
+layout_mode = 0
 offset_left = -43.0
 offset_top = 48.0
 offset_right = 87.0
@@ -364,3 +378,5 @@ text = "Lorem Ipsum Etc Etc"
 layout_mode = 2
 theme = ExtResource("2_4hjbm")
 text = "forage here"
+
+[connection signal="pressed" from="InfoContainer/ActionButton" to="." method="_on_action_button_pressed"]

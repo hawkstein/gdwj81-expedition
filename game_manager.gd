@@ -2,7 +2,7 @@ extends Node
 
 var location_names := ["Goblinestone","Grubham", "Stinkton","Shroomburg","Near Lichen","Far Lichen"]
 var edges := [[0,1],[0,2],[1,3],[1,4],[2,3],[2,5],[3,4],[3,5]] # [location_index, location_index]
-var mushroom_names := ["Big Ol' Conecaps","Witches Teats","Stinky Todgers","Dragon Saddles","Giant's Puffball", \
+var mushroom_names := ["Big Ol' Conecaps","Witches Teats","Stinky Todgers","Dragon Scales","Giant's Puffball", \
 "Fairy Redcaps","Lil' Gnomecaps","The Unicorn","Funeral Bell","Wizard's Inkcap","Elvish Ear", \
 "King's Cup","Bone Brittlestem","Dwarven Bolete", "Thieve's Shank","Cursed Polypore", "Kraken Gill", "Dark Deathcap"]
 
@@ -10,6 +10,14 @@ var days_left := 30
 var locations:Array[Location] = []
 var useless_shrooms := []
 var home_locations: Dictionary
+
+var forest_selection := []
+
+var band:Array[Goblin] = []
+var selected_band:Array[int] = []
+var max_band := 3
+var next_goblin_uid := 0
+signal band_selection_changed
 
 func _ready() -> void:
 	initialise_game()
@@ -47,7 +55,22 @@ func initialise_game() -> void:
 	#print("\n")
 	print_locations()
 	#print_prices()
+	recruit_band()
+
+func select_forest(location_index:int, forest_index:int) -> void:
+	forest_selection = [location_index, forest_index]
 	
+func recruit_band() -> void:
+	band = []
+	add_forager_to_band()
+	add_forager_to_band()
+	add_forager_to_band()
+	selected_band = [0]
+
+func add_forager_to_band() -> void:
+	band.append(Goblin.new(Goblin.GoblinType.FORAGER, next_goblin_uid))
+	next_goblin_uid += 1
+
 func distribute_mushrooms() -> void:
 	# setup mushrooms in their home locations
 	home_locations = {}
@@ -182,6 +205,14 @@ func distance_between_locations(start:int, target:int) -> int:
 		if neighbor == target:
 			return 1
 	return 2
+
+func toggle_goblin_selection(p_uid:int) -> void:
+	print(p_uid)
+	if selected_band.has(p_uid):
+		selected_band.erase(p_uid)
+	else:
+		selected_band.append(p_uid)
+	band_selection_changed.emit()
 	
 func print_locations():
 	for location in locations:
