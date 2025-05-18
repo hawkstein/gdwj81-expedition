@@ -9,8 +9,6 @@ const GOBLIN_BUTTON = preload("res://goblin_band/goblin_button.tscn")
 
 func _ready() -> void:
 	GameManager.band_selection_changed.connect(_on_selection_changed)
-	forage_button.disabled = true
-	set_band_size_label()
 	validation_label.text = "Please select {0} goblins before foraging".format([GameManager.max_band])
 	for goblin in GameManager.band:
 		var button = GOBLIN_BUTTON.instantiate()
@@ -19,8 +17,6 @@ func _ready() -> void:
 		button.connect("button_hovered", _on_goblin_button_hovered)
 		button.connect("button_blurred", _on_goblin_button_blurred)
 		button.goblin_uid = goblin.goblin_uid
-		if GameManager.selected_band.has(goblin.goblin_uid):
-			button.select()
 		var info_text = ""
 		match goblin.type:
 			Goblin.GoblinType.FORAGER:
@@ -32,6 +28,7 @@ func _ready() -> void:
 			Goblin.GoblinType.GUZZLER:
 				info_text = "Guzzler Lvl {0}".format([goblin.level])
 		button.set_info(info_text)
+		_on_selection_changed()
 
 func _on_selection_changed() -> void:
 	set_band_size_label()
