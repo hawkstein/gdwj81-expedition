@@ -4,6 +4,7 @@ extends Control
 
 signal button_pressed(goblin_uid:String)
 signal button_hovered(goblin_uid:String)
+signal button_blurred(goblin_uid:String)
 
 var goblin_uid:int
 
@@ -24,3 +25,7 @@ func _on_clear_button_pressed() -> void:
 
 func _on_clear_button_mouse_entered() -> void:
 	button_hovered.emit(goblin_uid)
+
+
+func _on_clear_button_mouse_exited() -> void:
+	button_blurred.emit(goblin_uid)

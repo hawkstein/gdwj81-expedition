@@ -17,6 +17,7 @@ func _ready() -> void:
 		buttons_h_flow_container.add_child(button)
 		button.connect("button_pressed", _on_goblin_button_pressed)
 		button.connect("button_hovered", _on_goblin_button_hovered)
+		button.connect("button_blurred", _on_goblin_button_blurred)
 		button.goblin_uid = goblin.goblin_uid
 		if GameManager.selected_band.has(goblin.goblin_uid):
 			button.select()
@@ -53,6 +54,9 @@ func _on_goblin_button_pressed(uid) -> void:
 
 func _on_goblin_button_hovered(uid) -> void:
 	info_label.text = GameManager.get_goblin_info(uid)
+
+func _on_goblin_button_blurred(_uid) -> void:
+	info_label.text = ""
 
 func _on_forage_button_pressed() -> void:
 	SceneManager.change_scene("forage", SceneManager.create_options(), SceneManager.create_options(),SceneManager.create_general_options())
