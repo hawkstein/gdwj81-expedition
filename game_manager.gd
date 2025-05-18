@@ -172,7 +172,11 @@ func pick_griffen_location() -> void:
 	var forest_index = randi_range(0, 2)
 	var forest = locations[location_index].forests[forest_index]
 	forest.has_griffen = true
-	var replacement = forest.mushrooms.find_custom(func(chance:Array): return is_equal_approx(chance[0], 0.1))
+	var replacement = -1
+	var start_probability = 0.1
+	while replacement == -1:
+		replacement = forest.mushrooms.find_custom(func(chance:Array): return is_equal_approx(chance[0], start_probability))
+		start_probability += 0.1
 	forest.mushrooms.remove_at(replacement)
 	forest.mushrooms.append([0.1, "Griffin Of The Woods"])
 	for location in locations:

@@ -29,9 +29,9 @@ func queue_goblins() -> void:
 	for gobbo in goblins:
 		match gobbo.type:
 			Goblin.GoblinType.FORAGER:
-				queue_forager(time_taken)
+				queue_forager()
 
-func queue_forager(start_time:float) -> void:
+func queue_forager() -> void:
 	var finish_time = snappedf(time_taken + 1.8 + randf_range(0, 0.4), 0.25)
 	# TODO: add queue time based on level
 	if (finish_time > 9.0):
@@ -88,7 +88,7 @@ func pop_queue() -> void:
 		output.text = "Found an unknown mushroom!\n\nWe think it's {0}".format([next.mushroom])
 	match next.type:
 			Goblin.GoblinType.FORAGER:
-				queue_forager(time_taken)
+				queue_forager()
 
 func check_finished_then_pop() -> void:
 	if not queue.is_empty():

@@ -31,39 +31,60 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -436.0
-offset_top = -180.5
+offset_top = -457.0
 offset_right = 436.0
-offset_bottom = 180.5
+offset_bottom = 379.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/separation = 20
+theme_override_constants/separation = 0
 
-[node name="Title" type="Label" parent="VBoxContainer"]
+[node name="TopTitle" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_ok6iv")
-theme_override_font_sizes/font_size = 96
-text = "Griffin Of The Woods"
+theme_override_colors/font_outline_color = Color(0.298039, 0.243137, 0.141176, 1)
+theme_override_constants/outline_size = 50
+theme_override_font_sizes/font_size = 256
+text = "Griffin"
+horizontal_alignment = 1
 
-[node name="Blurb" type="Label" parent="VBoxContainer"]
+[node name="BottomTitle" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_ok6iv")
+theme_override_colors/font_outline_color = Color(0.298039, 0.243137, 0.141176, 1)
+theme_override_constants/outline_size = 50
+theme_override_font_sizes/font_size = 128
+text = "Of The Woods"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Blurb" type="Label" parent="VBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_ok6iv")
 text = "A trading game about goblins
 foraging for mushrooms"
 horizontal_alignment = 1
 
-[node name="StartButton" type="Button" parent="VBoxContainer"]
+[node name="StartButton" type="Button" parent="VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("1_ok6iv")
+theme_override_font_sizes/font_size = 56
 text = "Start"
 
-[node name="OptionsButton" type="Button" parent="VBoxContainer"]
+[node name="OptionsButton" type="Button" parent="VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("1_ok6iv")
+theme_override_font_sizes/font_size = 56
 text = "Options"
 
-[connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
