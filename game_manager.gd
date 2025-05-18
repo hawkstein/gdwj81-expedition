@@ -53,7 +53,7 @@ func initialise_game() -> void:
 	#print("useless shrooms")
 	#print(useless_shrooms)
 	#print("\n")
-	print_locations()
+	#print_locations()
 	#print_prices()
 	recruit_band()
 
@@ -207,7 +207,6 @@ func distance_between_locations(start:int, target:int) -> int:
 	return 2
 
 func toggle_goblin_selection(p_uid:int) -> void:
-	print(p_uid)
 	if selected_band.has(p_uid):
 		selected_band.erase(p_uid)
 	else:

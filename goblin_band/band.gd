@@ -18,6 +18,17 @@ func _ready() -> void:
 		button.goblin_uid = goblin.goblin_uid
 		if GameManager.selected_band.has(goblin.goblin_uid):
 			button.select()
+		var info_text = ""
+		match goblin.type:
+			Goblin.GoblinType.FORAGER:
+				info_text = "Forager Lvl {0}".format([goblin.level])
+			Goblin.GoblinType.SPECIALIST:
+				info_text = "Specialist Lvl {0}".format([goblin.level])
+			Goblin.GoblinType.SCOUT:
+				info_text = "Scout Lvl {0}".format([goblin.level])
+			Goblin.GoblinType.GUZZLER:
+				info_text = "Guzzler Lvl {0}".format([goblin.level])
+		button.set_info(info_text)
 
 func _on_selection_changed() -> void:
 	set_band_size_label()
