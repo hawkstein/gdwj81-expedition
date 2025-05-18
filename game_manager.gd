@@ -1,7 +1,7 @@
 extends Node
 
-var location_names := ["Goblinestone","Grubham", "Stinkton","Shroomburg","Near Lichen","Far Lichen"]
-var edges := [[0,1],[0,2],[1,3],[1,4],[2,3],[2,5],[3,4],[3,5]] # [location_index, location_index]
+const location_names := ["Goblinestone","Grubham", "Stinkton","Shroomburg","Near Lichen","Far Lichen"]
+const edges := [[0,1],[0,2],[1,3],[1,4],[2,3],[2,5],[3,4],[3,5]] # [location_index, location_index]
 var mushroom_names := ["Big Ol' Conecaps","Witches Teats","Stinky Todgers","Dragon Scales","Giant's Puffball", \
 "Fairy Redcaps","Lil' Gnomecaps","The Unicorn","Funeral Bell","Wizard's Inkcap","Elvish Ear", \
 "King's Cup","Bone Brittlestem","Dwarven Bolete", "Thieve's Shank","Cursed Polypore", "Kraken Gill", "Dark Deathcap"]
@@ -9,7 +9,8 @@ var mushroom_names := ["Big Ol' Conecaps","Witches Teats","Stinky Todgers","Drag
 var days_left := 30
 var locations:Array[Location] = []
 var useless_shrooms := []
-var home_locations: Dictionary
+var home_locations:Dictionary
+var identified_mushrooms:Array[String] = []
 
 var forest_selection := []
 
@@ -53,12 +54,18 @@ func initialise_game() -> void:
 	#print("useless shrooms")
 	#print(useless_shrooms)
 	#print("\n")
-	#print_locations()
+	print_locations()
 	#print_prices()
 	recruit_band()
 
 func select_forest(location_index:int, forest_index:int) -> void:
 	forest_selection = [location_index, forest_index]
+	
+func get_selected_forest() -> Location.Forest:
+	return locations[forest_selection[0]].forests[forest_selection[1]]
+	
+func get_selected_band() -> Array[Goblin]:
+	return band.filter(func(goblin:Goblin): return selected_band.has(goblin.goblin_uid))
 	
 func recruit_band() -> void:
 	band = []
@@ -214,7 +221,7 @@ func toggle_goblin_selection(p_uid:int) -> void:
 	band_selection_changed.emit()
 	
 func get_goblin_info(p_uid:int) -> String:
-	var goblin_index = band.find_custom(func(goblin:Goblin): return goblin.goblin_uid == p_uid)
+	var goblin_index = band.find_custom(func(f_goblin:Goblin): return f_goblin.goblin_uid == p_uid)
 	var goblin = band.get(goblin_index)
 	var info_text = ""
 	match goblin.type:

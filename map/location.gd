@@ -37,11 +37,18 @@ func add_mushroom_to_next_forest(chance:float, mushroom:String) -> void:
 		next_forest = 0
 
 func add_random_chance() -> void:
-	var forest = forests.pick_random()
-	var bonus_chance = forest.mushrooms.pick_random()
-	bonus_chance[0] += 0.1
-	
-	var total_probability = 0.0;
-	for m in forest.mushrooms:
-		total_probability += m[0]
-	assert(is_equal_approx(total_probability, 1.0), "Probability missing")
+	for forest in forests:
+		var bonus_chance = forest.mushrooms.pick_random()
+		bonus_chance[0] += 0.1
+		
+		var total_probability = 0.0;
+		for m in forest.mushrooms:
+			total_probability += m[0]
+		assert(is_equal_approx(total_probability, 1.0), "Probability missing")
+		
+		var merge = {}
+		for m in forest.mushrooms:
+			merge.set(m[1], merge.get_or_add(m[1], 0) + m[0])
+		forest.mushrooms = []
+		for shroom in merge:
+			forest.mushrooms.append([merge[shroom], shroom])

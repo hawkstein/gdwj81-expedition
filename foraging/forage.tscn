@@ -1,4 +1,8 @@
-[gd_scene format=3 uid="uid://blcdmc6yp067i"]
+[gd_scene load_steps=4 format=3 uid="uid://blcdmc6yp067i"]
+
+[ext_resource type="Theme" uid="uid://c6hyu8hna1sh7" path="res://ui-scenes/default.tres" id="1_2kehg"]
+[ext_resource type="Script" uid="uid://c61gny3p0lbbu" path="res://foraging/forage.gd" id="1_e7g8q"]
+[ext_resource type="FontFile" uid="uid://dmmb45mnthq73" path="res://ui-scenes/Alegreya-VariableFont_wght.ttf" id="3_8qj6t"]
 
 [node name="Forage" type="Control"]
 layout_mode = 3
@@ -7,3 +11,77 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_e7g8q")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.588235, 0.423529, 0.423529, 1)
+metadata/_edit_lock_ = true
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -148.0
+offset_top = 41.0
+offset_right = 151.0
+offset_bottom = 83.0
+grow_horizontal = 2
+theme = ExtResource("1_2kehg")
+theme_override_font_sizes/font_size = 64
+text = "Forage mushrooms"
+
+[node name="HoursLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -188.0
+offset_top = 132.0
+offset_right = 188.0
+offset_bottom = 174.0
+grow_horizontal = 2
+theme = ExtResource("1_2kehg")
+theme_override_font_sizes/font_size = 36
+text = "9 hours left in the day"
+horizontal_alignment = 2
+
+[node name="Output" type="Label" parent="."]
+layout_mode = 0
+offset_left = 404.0
+offset_top = 340.0
+offset_right = 1023.0
+offset_bottom = 615.0
+theme = ExtResource("1_2kehg")
+theme_override_fonts/font = ExtResource("3_8qj6t")
+text = "Output area"
+autowrap_mode = 2
+
+[node name="KeepButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -181.0
+offset_top = -176.0
+offset_right = -74.0
+offset_bottom = -124.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("1_2kehg")
+text = "Keep
+"
+
+[node name="StartTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
