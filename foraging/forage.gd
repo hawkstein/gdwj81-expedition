@@ -4,14 +4,7 @@ extends Control
 @onready var keep_button: Button = $KeepButton
 @onready var discard_button: Button = $DiscardButton
 @onready var stash_info_label: Label = $StashInfoLabel
-
-# get mushroom info for this forest
-# get the selected band of goblins
-# roll the dice for the goblins
-# queue their output into the interface
-# roll again when output is reviewed
-# if output is past the time limit, discard & sleep goblin
-# if all goblins asleep or if baskets are full then finish
+@onready var trade_button: Button = $TradeButton
 
 var forest:Location.Forest
 var goblins:Array[Goblin] 
@@ -98,6 +91,7 @@ func check_finished_then_pop() -> void:
 		hours_label.text = "0 hours left in the day"
 		keep_button.visible = false
 		discard_button.visible = false
+		trade_button.visible = true
 
 func _on_keep_button_pressed() -> void:
 	stash.set(next.mushroom, stash.get_or_add(next.mushroom, 0) + 1)
@@ -114,3 +108,7 @@ func _on_discard_button_pressed() -> void:
 	next = null
 	output.text = ""
 	check_finished_then_pop()
+
+
+func _on_trade_button_pressed() -> void:
+	SceneManager.change_scene("map", SceneManager.create_options(), SceneManager.create_options(),SceneManager.create_general_options())

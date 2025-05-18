@@ -122,15 +122,34 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -288.0
+offset_left = -286.0
 offset_top = 195.0
-offset_right = -27.0
+offset_right = -25.0
 offset_bottom = 560.0
 grow_horizontal = 0
 theme = ExtResource("1_2kehg")
 theme_override_fonts/font = ExtResource("3_8qj6t")
 autowrap_mode = 2
 
+[node name="TradeButton" type="Button" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -304.5
+offset_top = -144.0
+offset_right = 304.5
+offset_bottom = -51.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("1_2kehg")
+theme_override_font_sizes/font_size = 72
+text = "Trade mushrooms"
+
 [connection signal="pressed" from="KeepButton" to="." method="_on_keep_button_pressed"]
 [connection signal="pressed" from="DiscardButton" to="." method="_on_discard_button_pressed"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+[connection signal="pressed" from="TradeButton" to="." method="_on_trade_button_pressed"]
