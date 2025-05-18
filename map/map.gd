@@ -3,6 +3,7 @@ extends Node2D
 @onready var info_container: VBoxContainer = $InfoContainer
 @onready var focus_label: Label = $InfoContainer/FocusLabel
 @onready var location_info: Label = $InfoContainer/LocationInfo
+@onready var tutorial: Control = $Tutorial
 
 var focused_location_index := -1
 var focused_forest_index := -1
@@ -33,3 +34,7 @@ func handle_forest_pressed(location_index:int, forest_index:int) -> void:
 func _on_action_button_pressed() -> void:
 	GameManager.select_forest(focused_location_index, focused_forest_index)
 	SceneManager.change_scene("band", SceneManager.create_options(), SceneManager.create_options(),SceneManager.create_general_options())
+
+
+func _on_close_button_pressed() -> void:
+	tutorial.visible = false

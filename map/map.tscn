@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bmforggwv6th2"]
+[gd_scene load_steps=7 format=3 uid="uid://bmforggwv6th2"]
 
 [ext_resource type="Script" uid="uid://bjxk6k7w2rfid" path="res://map/map.gd" id="1_a0dt8"]
 [ext_resource type="Theme" uid="uid://c6hyu8hna1sh7" path="res://ui-scenes/default.tres" id="2_4hjbm"]
 [ext_resource type="Texture2D" uid="uid://bfybrvrgywaed" path="res://map/Village.png" id="3_kffv2"]
 [ext_resource type="Texture2D" uid="uid://k58ssp4b2pl3" path="res://map/Forest.png" id="4_7lyie"]
 [ext_resource type="FontFile" uid="uid://dmmb45mnthq73" path="res://ui-scenes/Alegreya-VariableFont_wght.ttf" id="5_5jdw0"]
+[ext_resource type="Texture2D" uid="uid://3o1ssfft7kul" path="res://map/Subtract.png" id="6_7lyie"]
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_a0dt8")
@@ -379,4 +380,72 @@ layout_mode = 2
 theme = ExtResource("2_4hjbm")
 text = "forage here"
 
+[node name="Tutorial" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 1440.0
+offset_bottom = 1024.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TutorialFocusSprite" type="Sprite2D" parent="Tutorial"]
+modulate = Color(1, 1, 1, 0.537255)
+position = Vector2(1060, 831)
+scale = Vector2(0.89401, 0.89401)
+texture = ExtResource("6_7lyie")
+
+[node name="Panel" type="Panel" parent="Tutorial"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -150.0
+offset_right = 300.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(300, 0)
+
+[node name="Instructions" type="Label" parent="Tutorial/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 25.0
+offset_top = 17.0
+offset_right = -16.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_4hjbm")
+theme_override_fonts/font = ExtResource("5_5jdw0")
+theme_override_font_sizes/font_size = 24
+text = "This map shows you all the forest locations you can forage in and villages you can trade at
+
+You start in the village \"Goblinestone\"
+You will discover more forests as you play
+
+Select one of the two forests to send out your expedition
+"
+autowrap_mode = 2
+
+[node name="CloseButton" type="Button" parent="Tutorial"]
+layout_mode = 0
+offset_left = 657.0
+offset_top = 685.0
+offset_right = 785.0
+offset_bottom = 737.0
+theme = ExtResource("2_4hjbm")
+text = "Close"
+
 [connection signal="pressed" from="InfoContainer/ActionButton" to="." method="_on_action_button_pressed"]
+[connection signal="pressed" from="Tutorial/CloseButton" to="." method="_on_close_button_pressed"]
