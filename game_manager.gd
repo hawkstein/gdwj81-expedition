@@ -46,17 +46,15 @@ func initialise_game() -> void:
 	
 	setup_maps()
 	setup_prices()
-		
 #	TODO: add market mods
-
 	pick_griffen_location()
-
+	recruit_band()
+	
 	#print("useless shrooms")
 	#print(useless_shrooms)
 	#print("\n")
-	print_locations()
+	#print_locations()
 	#print_prices()
-	recruit_band()
 
 func select_forest(location_index:int, forest_index:int) -> void:
 	forest_selection = [location_index, forest_index]
@@ -235,6 +233,13 @@ func get_goblin_info(p_uid:int) -> String:
 		Goblin.GoblinType.GUZZLER:
 			info_text = "Guzzler Lvl {0}\n".format([goblin.level])
 	return info_text
+	
+func check_mushroom_discovery(p_mushroom:String) -> bool:
+	if identified_mushrooms.has(p_mushroom):
+		return true
+	else:
+		identified_mushrooms.append(p_mushroom)
+		return false
 	
 func print_locations():
 	for location in locations:

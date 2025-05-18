@@ -1,6 +1,9 @@
 extends Control
 @onready var output: Label = $Output
 @onready var hours_label: Label = $HoursLabel
+@onready var keep_button: Button = $KeepButton
+@onready var discard_button: Button = $DiscardButton
+@onready var stash_info_label: Label = $StashInfoLabel
 
 # get mushroom info for this forest
 # get the selected band of goblins
@@ -14,7 +17,8 @@ var forest:Location.Forest
 var goblins:Array[Goblin] 
 var time_taken := 0.0
 var queue = []
-#var count = {}
+var next
+var stash = {}
 
 func _ready() -> void:
 	forest = GameManager.get_selected_forest()
@@ -28,6 +32,10 @@ func queue_goblins() -> void:
 				queue_forager(time_taken)
 
 func queue_forager(start_time:float) -> void:
+	var finish_time = snappedf(time_taken + 1.8 + randf_range(0, 0.4), 0.25)
+	# TODO: add queue time based on level
+	if (finish_time > 9.0):
+		return
 	# are there any unidentified shrooms
 	var mushrooms = forest.mushrooms.duplicate(true)
 	var unidentified = mushrooms.filter(func(chance:Array): return not GameManager.identified_mushrooms.has(chance[1]))
@@ -39,8 +47,6 @@ func queue_forager(start_time:float) -> void:
 			var u_shroom = unidentified[i]
 			chance_redistribution += u_shroom[0]/2
 			u_shroom[0] = u_shroom[0]/2
-		print(unidentified)
-		print("chance redistribution: {0}".format([chance_redistribution]))
 		var split = chance_redistribution / identified.size()
 		for known in identified:
 			known[0] += split
@@ -61,16 +67,50 @@ func queue_forager(start_time:float) -> void:
 	var found_shroom = samples[result]
 	var f_name = found_shroom[1]
 	#count.set(f_name, count.get_or_add(f_name, 0) + 1)
-	var finish_time = snappedf(time_taken + 1.8 + randf_range(0, 0.4), 0.25)
-	queue.append({ "finish_time":finish_time, "mushroom":f_name, "goblin":Goblin.GoblinType.FORAGER })
-	# add queue time based on level
+	queue.append({ "finish_time":finish_time, "mushroom":f_name, "type":Goblin.GoblinType.FORAGER })
+	queue.sort_custom(func(a,b): return a.finish_time < b.finish_time)
 
 func _on_start_timer_timeout() -> void:
+	keep_button.disabled = false
+	discard_button.disabled = false
 	pop_queue()
 	
 func pop_queue() -> void:
-	var next = queue.pop_front()
-	time_taken += next.finish_time
+	next = queue.pop_front()
+	if next.finish_time > time_taken:
+		time_taken = next.finish_time
 	var hours_left = 9 - time_taken
 	hours_label.text = "{0} hours left in the day".format([hours_left])
-	output.text = "Found some {0}!".format([next.mushroom])
+	var known = GameManager.check_mushroom_discovery(next.mushroom)
+	if known:
+		output.text = "Found some {0}!".format([next.mushroom])
+	else:
+		output.text = "Found an unknown mushroom!\n\nWe think it's {0}".format([next.mushroom])
+	match next.type:
+			Goblin.GoblinType.FORAGER:
+				queue_forager(time_taken)
+
+func check_finished_then_pop() -> void:
+	if not queue.is_empty():
+		pop_queue()
+	else:
+		output.text = "The day has ended!"
+		hours_label.text = "0 hours left in the day"
+		keep_button.visible = false
+		discard_button.visible = false
+
+func _on_keep_button_pressed() -> void:
+	stash.set(next.mushroom, stash.get_or_add(next.mushroom, 0) + 1)
+	var stash_text = ""
+	for shroom in stash:
+		stash_text += "{0} : {1}\n".format([shroom, stash[shroom]])
+	stash_info_label.text = stash_text
+	next = null
+	output.text = ""
+	check_finished_then_pop()
+
+
+func _on_discard_button_pressed() -> void:
+	next = null
+	output.text = ""
+	check_finished_then_pop()
