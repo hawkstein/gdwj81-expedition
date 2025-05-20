@@ -20,6 +20,9 @@ var max_band := 3
 var next_goblin_uid := 0
 signal band_selection_changed
 
+enum Tutorial { MAP }
+var tutorials := { Tutorial.MAP: true }
+
 func _ready() -> void:
 	initialise_game()
 	

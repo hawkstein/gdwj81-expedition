@@ -381,6 +381,7 @@ theme = ExtResource("2_4hjbm")
 text = "forage here"
 
 [node name="Tutorial" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5

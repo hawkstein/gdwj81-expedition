@@ -10,6 +10,9 @@ var focused_forest_index := -1
 
 func _ready() -> void:
 	info_container.visible = false
+	if GameManager.tutorials.get(GameManager.Tutorial.MAP):
+		tutorial.visible = true
+		GameManager.tutorials.set(GameManager.Tutorial.MAP, false)
 	# adjust the forests and the villages based on game data 
 	for location_index in range(GameManager.locations.size()):
 		var location = GameManager.locations[location_index]
