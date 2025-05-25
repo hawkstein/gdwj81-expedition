@@ -17,6 +17,8 @@ func _ready() -> void:
 	for location_index in range(GameManager.locations.size()):
 		var location = GameManager.locations[location_index]
 		var location_node = get_node(location.display_name)
+		var village_node = location_node.get_node("Village")
+		village_node.connect("pressed", func(): handle_village_pressed(location.display_name))
 		if location_node:
 			for i in range(0, location.forests.size()):
 				var forest_node = get_node(location.display_name+"/Forest "+str(i+1))
@@ -33,6 +35,16 @@ func handle_forest_pressed(location_index:int, forest_index:int) -> void:
 	focused_forest_index = forest_index
 	location_info.text = "Discovered mushrooms: " + str(focused_forest.discovered_mushrooms.size())
 
+func handle_village_pressed(village_name:String) -> void:
+	focus_label.text = village_name
+	var location = GameManager.locationsDict[village_name]
+	var price_text = ""
+	for price in location.prices:
+		var value = location.prices[price]
+		if value > 0:
+			price_text += "{0} - {1}\n".format([price, value])
+	info_container.visible = true
+	location_info.text = price_text
 
 func _on_action_button_pressed() -> void:
 	GameManager.select_forest(focused_location_index, focused_forest_index)

@@ -8,6 +8,7 @@ var mushroom_names := ["Big Ol' Conecaps","Witches Teats","Stinky Todgers","Drag
 
 var days_left := 30
 var locations:Array[Location] = []
+var locationsDict:Dictionary[String, Location] = {}
 var useless_shrooms := []
 var home_locations:Dictionary
 var identified_mushrooms:Array[String] = []
@@ -33,6 +34,7 @@ func initialise_game() -> void:
 	for location_name in location_names:
 		var location = Location.new(location_name)
 		locations.append(location)
+		locationsDict[location_name] = location
 	
 	distribute_mushrooms()
 	

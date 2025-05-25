@@ -372,7 +372,9 @@ text = "Focus Title"
 [node name="LocationInfo" type="Label" parent="InfoContainer"]
 layout_mode = 2
 theme = ExtResource("2_4hjbm")
+theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("5_5jdw0")
+theme_override_font_sizes/font_size = 24
 text = "Lorem Ipsum Etc Etc"
 
 [node name="ActionButton" type="Button" parent="InfoContainer"]
