@@ -52,3 +52,6 @@ func add_random_chance() -> void:
 		forest.mushrooms = []
 		for shroom in merge:
 			forest.mushrooms.append([merge[shroom], shroom])
+			
+func hasKnownForests() -> bool:
+	return forests.any(func(forest:Forest): return forest.discovered)

@@ -380,7 +380,7 @@ text = "Lorem Ipsum Etc Etc"
 [node name="ActionButton" type="Button" parent="InfoContainer"]
 layout_mode = 2
 theme = ExtResource("2_4hjbm")
-text = "forage here"
+text = "forage"
 
 [node name="Tutorial" type="Control" parent="."]
 visible = false

@@ -111,4 +111,5 @@ func _on_discard_button_pressed() -> void:
 
 
 func _on_trade_button_pressed() -> void:
+	GameManager.current_state = GameManager.State.TRADING
 	SceneManager.change_scene("map", SceneManager.create_options(), SceneManager.create_options(),SceneManager.create_general_options())

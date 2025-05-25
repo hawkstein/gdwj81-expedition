@@ -24,11 +24,15 @@ signal band_selection_changed
 enum Tutorial { MAP }
 var tutorials := { Tutorial.MAP: true }
 
+enum State { FORAGING, TRADING }
+var current_state:State = State.FORAGING
+
 func _ready() -> void:
 	initialise_game()
 	
 func initialise_game() -> void:
 	days_left = 30
+	current_state = State.FORAGING
 	mushroom_names.shuffle()
 	locations = []
 	for location_name in location_names:

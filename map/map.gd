@@ -3,6 +3,7 @@ extends Node2D
 @onready var info_container: VBoxContainer = $InfoContainer
 @onready var focus_label: Label = $InfoContainer/FocusLabel
 @onready var location_info: Label = $InfoContainer/LocationInfo
+@onready var action_button: Button = $InfoContainer/ActionButton
 @onready var tutorial: Control = $Tutorial
 
 var focused_location_index := -1
@@ -10,6 +11,12 @@ var focused_forest_index := -1
 
 func _ready() -> void:
 	info_container.visible = false
+	match GameManager.current_state:
+		GameManager.State.FORAGING:
+			action_button.text = "Forage"
+		GameManager.State.TRADING:
+			action_button.text = "Trade"
+			
 	if GameManager.tutorials.get(GameManager.Tutorial.MAP):
 		tutorial.visible = true
 		GameManager.tutorials.set(GameManager.Tutorial.MAP, false)
@@ -28,6 +35,11 @@ func _ready() -> void:
 
 func handle_forest_pressed(location_index:int, forest_index:int) -> void:
 	info_container.visible = true
+	match GameManager.current_state:
+		GameManager.State.FORAGING:
+			action_button.visible = true
+		GameManager.State.TRADING:
+			action_button.visible = false
 	var location = GameManager.locations[location_index]
 	focused_location_index = location_index
 	focus_label.text = location.display_name + " Forest "+str(forest_index+1)
@@ -44,11 +56,23 @@ func handle_village_pressed(village_name:String) -> void:
 		if value > 0:
 			price_text += "{0} - {1}\n".format([price, value])
 	info_container.visible = true
+	info_container.visible = true
+	match GameManager.current_state:
+		GameManager.State.FORAGING:
+			action_button.visible = false
+		GameManager.State.TRADING:
+			action_button.visible = true
+	if not location.hasKnownForests():
+		action_button.visible = false
 	location_info.text = price_text
 
 func _on_action_button_pressed() -> void:
-	GameManager.select_forest(focused_location_index, focused_forest_index)
-	SceneManager.change_scene("band", SceneManager.create_options(), SceneManager.create_options(),SceneManager.create_general_options())
+	match GameManager.current_state:
+		GameManager.State.FORAGING:
+			GameManager.select_forest(focused_location_index, focused_forest_index)
+			SceneManager.change_scene("band", SceneManager.create_options(), SceneManager.create_options(),SceneManager.create_general_options())
+		GameManager.State.TRADING:
+			print("goto trading scene")
 
 
 func _on_close_button_pressed() -> void:
